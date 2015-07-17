@@ -13,4 +13,5 @@ describe 'deck', ->
       assert.strictEqual deck.length, 50
       console.log deck.last()
       assert.strictEqual deck.last(), hand.hit()
+      
       assert.strictEqual deck.length, 49
