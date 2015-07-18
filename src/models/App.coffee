@@ -5,6 +5,12 @@ class window.App extends Backbone.Model
     @set 'deck', deck = new Deck()
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
-    this.get('dealerHand').on 'end', => this.findWinner()
+    @get('dealerHand').on 'end', => @findWinner()
 
-  findWinner: -> console.log this.get('dealerHand').minScore()
+  findWinner: -> 
+  	winner = alert 'YOU BOTH LOST'
+  	if @get('dealerHand').scores() > @get('playerHand').scores() 
+  		winner = alert "YOU LOSE FOOL." 
+  	else if @get('dealerHand').scores() < @get('playerHand').scores() 
+  		winner = alert "YOU DIDN'T LOSE IDIOT."
+  	return winner
