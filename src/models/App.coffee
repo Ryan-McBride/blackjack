@@ -3,14 +3,20 @@
 class window.App extends Backbone.Model
   initialize: ->
     @set 'deck', deck = new Deck()
-    @set 'playerHand', deck.dealPlayer()
-    @set 'dealerHand', deck.dealDealer()
-    @get('dealerHand').on 'end', => @findWinner()
+    @deal()
+    @get('dealerHand').on 'end', => 
+      @deal()
+      @findWinner()
+
+
 
   findWinner: -> 
-  	winner = alert 'YOU BOTH LOST'
-  	if @get('dealerHand').scores() > @get('playerHand').scores() 
-  		winner = alert "YOU LOSE FOOL." 
-  	else if @get('dealerHand').scores() < @get('playerHand').scores() 
-  		winner = alert "YOU DIDN'T LOSE IDIOT."
-  	return winner
+    if @get('dealerHand').scores() > @get('playerHand').scores() 
+      alert "YOU LOSE FOOL." 
+    else if this.get('dealerHand').scores() < this.get('playerHand').scores() 
+      alert "YOU DIDN'T LOSE IDIOT."
+    else alert "YOU BOTH LOST."
+
+  deal: -> 
+    @set 'playerHand', @get('deck').dealPlayer()
+    @set 'dealerHand', @get('deck').dealDealer()

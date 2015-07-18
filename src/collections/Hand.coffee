@@ -25,7 +25,6 @@ class window.Hand extends Backbone.Collection
     if maxScore > 21 then return @minScore()
     else return maxScore
      
-
   stand: ->
     @models[0].flip()
     @trigger 'end'
