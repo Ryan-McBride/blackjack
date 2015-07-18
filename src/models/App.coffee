@@ -5,18 +5,27 @@ class window.App extends Backbone.Model
     @set 'deck', deck = new Deck()
     @deal()
     @get('dealerHand').on 'end', => 
-      @deal()
       @findWinner()
 
 
 
   findWinner: -> 
     if @get('dealerHand').scores() > @get('playerHand').scores() 
-      alert "YOU LOSE FOOL." 
+      console.log "YOU LOSE FOOL." 
     else if this.get('dealerHand').scores() < this.get('playerHand').scores() 
-      alert "YOU DIDN'T LOSE IDIOT."
-    else alert "YOU BOTH LOST."
+      console.log "YOU DIDN'T LOSE IDIOT."
+    else console.log "YOU BOTH LOST."
+    
+    run = () =>
+      @deal()
+    setTimeout run, 2500
 
   deal: -> 
     @set 'playerHand', @get('deck').dealPlayer()
     @set 'dealerHand', @get('deck').dealDealer()
+    @trigger 'refresh'
+    @blackJackOrNah()
+
+  blackJackOrNah : ->
+    if @get('playerHand').scores() == 21 or @get('dealerHand').hiddenCardScore() == 20
+      @findWinner()
